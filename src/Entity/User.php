@@ -21,7 +21,7 @@ class User
     private ?string $surname = null;
     private ?string $phoneNumber = null;
     private ?string $education = null;
-    private ?int $approval = null;
+    private ?int $agreeTerms = null;
     
 
     public function getId(): ?int
@@ -89,14 +89,14 @@ class User
         return $this;
     }
 
-    public function getApproval(): ?string
+    public function getAgreeTerms(): ?string
     {
-        return $this->approval;
+        return $this->agreeTerms;
     }
 
-    public function setApproval(int $approval): static
+    public function setAgreeTerms(int $agreeTerms): static
     {
-        $this->approval = $approval;
+        $this->agreeTerms = $agreeTerms;
 
         return $this;
     }
