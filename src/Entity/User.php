@@ -6,7 +6,6 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User 
 {
     #[ORM\Id]
@@ -17,11 +16,16 @@ class User
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 180)]
     private ?string $name = null;
+    #[ORM\Column(length: 180)]
     private ?string $surname = null;
-    private ?string $phoneNumber = null;
+    #[ORM\Column(length: 180)]
+    private ?string $phone_number = null;
+    #[ORM\Column(length: 180)]
     private ?string $education = null;
-    private ?int $agreeTerms = null;
+    #[ORM\Column(length: 180)]
+    private ?int $agree_terms = null;
     
 
     public function getId(): ?int
@@ -48,19 +52,19 @@ class User
 
     public function setSurname(string $surname) : static
     {
-        $this->name = $surname;
+        $this->surname = $surname;
 
         return $this;
     }
 
     public function getPhoneNumber() : ?string
     {
-        return $this->phoneNumber;
+        return $this->phone_number;
     }
 
-    public function setPhoneNumber(string $phoneNumber) : static
+    public function setPhoneNumber(string $phone_number) : static
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phone_number = $phone_number;
 
         return $this;
     }
@@ -91,44 +95,14 @@ class User
 
     public function getAgreeTerms(): ?string
     {
-        return $this->agreeTerms;
+        return $this->agree_terms;
     }
 
-    public function setAgreeTerms(int $agreeTerms): static
+    public function setAgreeTerms(int $agree_terms): static
     {
-        $this->agreeTerms = $agreeTerms;
+        $this->agree_terms = $agree_terms;
 
         return $this;
     }
 
-    
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
 }

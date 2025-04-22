@@ -22,12 +22,12 @@ final class Version20250422042911 extends AbstractMigration
         $this->addSql(<<<'SQL'
             CREATE TABLE user 
             (id INT AUTO_INCREMENT NOT NULL,
-            name VARCHAR(50) NOT NULL,
-            surname VARCHAR(50) NOT NULL,
-            phoneNumber VARCHAR(11) NOT NULL,
-            email VARCHAR(180) NOT NULL,
-            education INT NOT NULL,
-            agreeTerms INT DEFAULT 0,
+            name VARCHAR(50),
+            surname VARCHAR(50),
+            phone_number VARCHAR(11),
+            email VARCHAR(180),
+            education INT,
+            agree_terms INT DEFAULT 0,
             UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email),
             PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
