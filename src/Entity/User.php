@@ -4,12 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,21 +17,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
+    private ?string $name = null;
+    private ?string $surname = null;
+    private ?string $phoneNumber = null;
+    private ?string $education = null;
+    private ?int $approval = null;
+    
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName() : ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name) : static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname() : ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname) : static
+    {
+        $this->name = $surname;
+
+        return $this;
+    }
+
+    public function getPhoneNumber() : ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber) : static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -47,6 +76,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getEducation(): ?string
+    {
+        return $this->education;
+    }
+
+    public function setEducation(string $education): static
+    {
+        $this->education = $education;
+
+        return $this;
+    }
+
+    public function getApproval(): ?string
+    {
+        return $this->approval;
+    }
+
+    public function setApproval(int $approval): static
+    {
+        $this->approval = $approval;
+
+        return $this;
+    }
+
+    
 
     /**
      * A visual identifier that represents this user.
@@ -63,39 +118,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return list<string>
      */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
 
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
