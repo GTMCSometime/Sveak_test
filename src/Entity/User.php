@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User 
@@ -13,18 +14,79 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    private ?string $email = null;
 
-    #[ORM\Column(length: 180)]
+    #[Assert\NotBlank
+        (message: 'Значение {{ value }} некорректно, либо поле не заполнено.',
+    )]
+    #[Assert\Type(
+        type: 'string',
+        message: 'Значение {{ value }} некорректно.',
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Имя должно быть длиннее {{ limit }} символов',
+        maxMessage: 'Имя должно быть короче {{ limit }} символов',
+    )]
+    #[ORM\Column(length: 50)]    
     private ?string $name = null;
-    #[ORM\Column(length: 180)]
+
+
+    #[Assert\NotBlank
+        (message: 'Значение {{ value }} некорректно, либо поле не заполнено.',
+    )]
+    #[Assert\Type(
+        type: 'string',
+        message: 'Значение {{ value }} некорректно.',
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Фамилия должна быть длиннее {{ limit }} символов',
+        maxMessage: 'Фамилия должна быть короче {{ limit }} символов',
+    )]
+    #[ORM\Column(length: 50)]  
     private ?string $surname = null;
-    #[ORM\Column(length: 180)]
+
+
+    #[Assert\NotBlank
+        (message: 'Значение {{ value }} некорректно, либо поле не заполнено.',
+    )]
+    #[Assert\Type(
+        type: 'string',
+        message: 'Значение {{ value }} некорректно.',
+    )]
+    #[Assert\Length(
+        min: 11,
+        max: 11,
+        minMessage: 'Некорректный формат',
+        maxMessage: 'Некорректный формат',
+    )]
+    #[ORM\Column(length: 11)]  
     private ?string $phone_number = null;
-    #[ORM\Column(length: 180)]
+
+
+    #[Assert\NotBlank
+        (message: 'Значение {{ value }} некорректно, либо поле не заполнено.',
+    )]
+    #[Assert\Email
+        (message: 'Значение {{ value }} не является email-адресом',
+    )]
+    #[ORM\Column(length: 320)]
+    private ?string $email = null;
+    
+
+    #[Assert\NotBlank
+        (message: 'Значение {{ value }} некорректно, либо поле не заполнено.',
+    )]
+    #[ORM\Column(length: 50)]
     private ?string $education = null;
-    #[ORM\Column(length: 180)]
+
+    #[Assert\Type(
+        type: 'integer',
+        message: 'Значение {{ value }} некорректно.',
+        )]
+    #[ORM\Column(length: 30)]
     private ?int $agree_terms = null;
     
 
