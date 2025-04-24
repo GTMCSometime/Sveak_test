@@ -57,8 +57,8 @@ class User
         message: 'Значение {{ value }} некорректно.',
     )]
     #[Assert\Length(
-        min: 11,
-        max: 11,
+        min: 10,
+        max: 10,
         minMessage: 'Некорректный формат',
         maxMessage: 'Некорректный формат',
     )]
@@ -88,6 +88,9 @@ class User
         )]
     #[ORM\Column(length: 30)]
     private ?int $agree_terms = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserScore $userScore = null;
     
 
     public function getId(): ?int
@@ -166,5 +169,23 @@ class User
 
         return $this;
     }
+
+    public function getUserScore(): ?UserScore
+    {
+        return $this->userScore;
+    }
+
+    public function setUserScore(UserScore $userScore): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userScore->getUser() !== $this) {
+            $userScore->setUser($this);
+        }
+
+        $this->userScore = $userScore;
+
+        return $this;
+    }
+
 
 }

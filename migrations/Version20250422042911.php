@@ -24,7 +24,7 @@ final class Version20250422042911 extends AbstractMigration
             (id INT AUTO_INCREMENT NOT NULL,
             name VARCHAR(50) NOT NULL,
             surname VARCHAR(50) NOT NULL,
-            phone_number VARCHAR(11) NOT NULL,
+            phone_number VARCHAR(10) NOT NULL,
             email VARCHAR(320) NOT NULL,
             education VARCHAR(30) NOT NULL,
             agree_terms INT DEFAULT 0,

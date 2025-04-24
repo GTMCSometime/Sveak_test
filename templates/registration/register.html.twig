@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1>Регистрация</h1>
 
     {{ form_errors(registrationForm) }}
 
@@ -15,6 +15,6 @@
         {{ form_row(registrationForm.education) }}
         {{ form_row(registrationForm.agree_terms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">Регистрация</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

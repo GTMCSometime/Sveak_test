@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserScore;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,11 +18,14 @@ class RegistrationController extends AbstractController
     public function register(Request $request, EntityManagerInterface $em, PersistenceManagerRegistry $doctrine): Response
     {
         $user = new User();
+        $userScore = new UserScore();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            $userScore->setScore(10);
+            $user->setUserScore($userScore);
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();

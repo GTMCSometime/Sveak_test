@@ -18,26 +18,38 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, 
-                ['required' => true])
+            [
+                    'label'    => 'Имя',
+                    'required' => true])
             ->add('surname', TextType::class,
-                 ['required' => true])
+            [
+                    'label'    => 'Фамилия',
+                    'required' => true])
             ->add('email', EmailType::class,
-                 ['required' => true])
+            [
+                    'label'    => 'email',
+                    'required' => true])
             ->add('phone_number', TextType::class,
-                 ['required' => true])
+            [
+                    'label'    => 'номер телефона',
+                    'attr' => [
+                    'placeholder' => "в формате '9123456789'"
+                    ],
+                    'required' => true])
             ->add('education', ChoiceType::class,
              [
-                'label'    => 'Образование',
-                'choices'  => [
-                'выберите' => null,
-                'Высшее образование' => 'higher',
-                'Специальное образование' => 'special',
-                'Среднее образование' => 'secondary',
+                    'label'    => 'Образование',
+                    'choices'  => [
+                    'выберите' => null,
+                    'Высшее образование' => 'higher',
+                    'Специальное образование' => 'special',
+                    'Среднее образование' => 'secondary',
             ], 
-                'required' => true,])
+                    'required' => true,])
             ->add('agree_terms', CheckboxType::class,
-             ['label'    => 'Я даю согласие на обработку моих личных данных',
-                'required' => false,
+             [
+                    'label'    => 'Я даю согласие на обработку моих личных данных',
+                    'required' => false,
             ]);
     }
 
