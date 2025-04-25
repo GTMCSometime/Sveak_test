@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Service;
+namespace App\Scoring;
 use App\Entity\User;
-use App\Entity\UserScore;
 
 class ScoreService {
     private $user;

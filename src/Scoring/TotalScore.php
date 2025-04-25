@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Scoring;
 use App\Repository\UserRepository;
 
 class TotalScore {

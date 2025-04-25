@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Список пользователей</h1>
+
+        {% if users is empty %}
+            <div class="alert alert-info">Пользователи не найдены.</div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>id</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Телефон</th>
+                            <th>Email</th>
+                            <th>Образование</th>
+                            <th>Согласие</th>
+                            <th>Скоринг</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ user.getName }}</td>
+                                <td>{{ user.getSurname }}</td>
+                                <td>{{ user.getPhoneNumber }}</td>
+                                <td>{{ user.getEmail }}</td>
+                                <td>{{ user.getEducation }}</td>
+                                <td>{{ user.getAgreeTerms }}</td>
+                                <td>{{ user.getUserScore.getScore }}</td>
+                                <td>
+                                <a href="#"></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
