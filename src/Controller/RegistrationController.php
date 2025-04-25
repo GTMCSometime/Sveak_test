@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserScore;
 use App\Form\RegistrationFormType;
+use App\Service\ScoreService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,12 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $userScore->setScore(10);
+            $score = new ScoreService($user)->setScore();
+            $userScore->setScore($score);
             $user->setUserScore($userScore);
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();
-
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('_profiler_home');
         }
