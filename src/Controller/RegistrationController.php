@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserScore;
 use App\Form\RegistrationFormType;
-use App\Scoring\ScoreService;
+use App\Scoring\CalculateScore;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +25,14 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $score = new ScoreService($user)->setScore();
+            $score = new CalculateScore($user)->setScore();
             $userScore->setScore($score);
             $user->setUserScore($userScore);
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('_profiler_home');
+            return $this->redirectToRoute('show_users');
         }
 
         return $this->render('registration/register.html.twig', [

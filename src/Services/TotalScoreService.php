@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Scoring;
+namespace App\Services;
 use App\Repository\UserRepository;
+use App\Scoring\AbstractScore;
 
-class TotalScore {
-    private $score;
+class TotalScoreService extends AbstractScore{
     private $users;
 
     public function __construct(private UserRepository $userRepository) {
-        $this->score = 0;
         $this->users = $this->userRepository->findAll();
     }
 

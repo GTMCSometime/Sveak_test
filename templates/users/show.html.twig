@@ -36,7 +36,8 @@
                                 <td>{{ user.getAgreeTerms }}</td>
                                 <td>{{ user.getUserScore.getScore }}</td>
                                 <td>
-                                <a href="#"></a>
+                                <a href="{{ path('edit_user', { id:user.getId }) }}" class="btn btn-sm btn-success">
+                                Редактировать</a>
                                 </td>
                             </tr>
                         {% endfor %}

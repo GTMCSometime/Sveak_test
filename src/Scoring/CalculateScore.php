@@ -3,14 +3,12 @@
 namespace App\Scoring;
 use App\Entity\User;
 
-class ScoreService {
+class CalculateScore extends AbstractScore {
     private $user;
     private $phoneNumber;
     private $domain;
     private $education;
     private $agreeTerms;
-
-    private int $score = 0;
 
     public function __construct(User $user) {
         $this->user = $user;
@@ -76,7 +74,7 @@ class ScoreService {
                     break;
     }
 
-    $this->agreeTerms == 1 ? $this->score += 4 : $this->score += 0;
+    $this->agreeTerms === true ? $this->score += 4 : $this->score += 0;
     return $this->score;
 }
 }

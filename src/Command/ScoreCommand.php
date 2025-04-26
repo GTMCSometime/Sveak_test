@@ -4,7 +4,7 @@ namespace App\Command;
 
 
 use App\Repository\UserRepository;
-use App\Scoring\TotalScore;
+use App\Services\TotalScoreService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ScoreCommand extends Command
 {
     public function __construct(private UserRepository $userRepository,
-    private TotalScore $totalScore)
+    private TotalScoreService $totalScore)
     {
 
         parent::__construct();

@@ -27,7 +27,7 @@ final class Version20250422042911 extends AbstractMigration
             phone_number VARCHAR(10) NOT NULL,
             email VARCHAR(320) NOT NULL,
             education VARCHAR(30) NOT NULL,
-            agree_terms INT DEFAULT 0,
+            agree_terms BOOLEAN DEFAULT false,
             UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email),
             PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);

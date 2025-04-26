@@ -83,11 +83,11 @@ class User
     private ?string $education = null;
 
     #[Assert\Type(
-        type: 'integer',
+        type: 'boolean',
         message: 'Значение {{ value }} некорректно.',
         )]
-    #[ORM\Column(length: 30)]
-    private ?int $agree_terms = null;
+    #[ORM\Column(type: 'boolean')]
+    private bool $agree_terms = false;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserScore $userScore = null;
@@ -158,12 +158,12 @@ class User
         return $this;
     }
 
-    public function getAgreeTerms(): ?string
+    public function getAgreeTerms(): ?bool
     {
         return $this->agree_terms;
     }
 
-    public function setAgreeTerms(int $agree_terms): static
+    public function setAgreeTerms(bool $agree_terms): static
     {
         $this->agree_terms = $agree_terms;
 
