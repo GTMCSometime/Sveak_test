@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <h1 class="mb-4">Список пользователей</h1>
 
-        {% if users is empty %}
+        {% if pagination is empty %}
             <div class="alert alert-info">Пользователи не найдены.</div>
         {% else %}
             <div class="table-responsive">
@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for user in pagination %}
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>{{ user.getName }}</td>
@@ -35,5 +35,8 @@
                 </table>
             </div>
         {% endif %}
+                <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
