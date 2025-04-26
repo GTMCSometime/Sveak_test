@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Scoring;
-use App\Entity\User;
 
 abstract class AbstractScore 
 {

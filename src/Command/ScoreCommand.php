@@ -45,7 +45,7 @@ class ScoreCommand extends Command
 
             $score = $user->getUserScore()->getScore();
 
-            $io->note(sprintf("Score to user witch id $userId: %s", $score));
+            $io->note(sprintf("Score to %s witch id $userId: %s", $user->getName(), $score));
         } else {
 
             $io->note(sprintf("Sum: %s", $this->totalScore->getTotalScore()));
