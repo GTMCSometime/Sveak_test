@@ -15,6 +15,7 @@
                         <tr>
                             <th>id</th>
                             <th>Имя</th>
+                            <th>Скоринг</th>
                             <th>Действие</th>
                         </tr>
                     </thead>
@@ -23,6 +24,7 @@
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>{{ user.getName }}</td>
+                                <td>{{ user.getUserScore.getScore }}</td>
                                 <td width="17%">
                                 <a href="{{ path('show_user', { id:user.getId }) }}" class="btn btn-sm btn-success">
                                 Просмотр</a>
