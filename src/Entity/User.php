@@ -56,13 +56,12 @@ class User
         type: 'string',
         message: 'Значение {{ value }} некорректно.',
     )]
-    #[Assert\Length(
-        min: 10,
-        max: 10,
-        minMessage: 'Некорректный формат',
-        maxMessage: 'Некорректный формат',
+
+    #[Assert\Regex(
+        pattern: '/^9\d{9}$/',
+        message: "Телефон должен начинаться с '9' и содержать 10 цифр."
     )]
-    #[ORM\Column(length: 11)]  
+    #[ORM\Column(length: 10)]  
     private ?string $phone_number = null;
 
 
