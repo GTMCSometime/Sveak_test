@@ -1,49 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Список пользователей{% endblock %}
+{% block title %}Просмотр{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="mb-4">Список пользователей</h1>
-
-        {% if users is empty %}
-            <div class="alert alert-info">Пользователи не найдены.</div>
-        {% else %}
+        <h1 class="mb-4">Просмотр</h1>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th>id</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Телефон</th>
-                            <th>Email</th>
-                            <th>Образование</th>
-                            <th>Согласие</th>
-                            <th>Скоринг</th>
-                            <th>Действие</th>
+                            <th>Данные</th>
+                            <th>Информация</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
                             <tr>
-                                <td>{{ loop.index }}</td>
+                            <td>Имя</td>
                                 <td>{{ user.getName }}</td>
+                                                            </tr>
+                            <tr>
+                            <td>Фамилия</td>
                                 <td>{{ user.getSurname }}</td>
-                                <td>{{ user.getPhoneNumber }}</td>
+                                                            </tr>
+                            <tr>
+                            <td>Номер</td>
+                                <td>+7{{ user.getPhoneNumber }}</td>
+                                                            </tr>
+                            <tr>
+                            <td>Email</td>
                                 <td>{{ user.getEmail }}</td>
-                                <td>{{ user.getEducation }}</td>
-                                <td>{{ user.getAgreeTerms }}</td>
+                                                            </tr>
+                            <tr>
+                            <td>Образование</td>
+                            {%if user.getEducation == 'higher' %}
+                                <td>Высшее</td>
+                            {%elseif user.getEducation == 'special' %}
+                                <td>Специальное</td>    
+                            {% elseif user.getEducation == 'secondary'  %}
+                                <td>Среднее</td>
+                            {% endif %}    
+                            <tr>
+                            <td>Согласие</td>
+                            {%if user.getAgreeTerms %}
+                                <td>Согласен</td>
+                            {% else %}
+                                <td>Не согласен</td>
+                            {% endif %}        
+                                                            </tr>
+                            <tr>
+                            <td>Скоринг</td>                                
                                 <td>{{ user.getUserScore.getScore }}</td>
-                                <td>
-                                <a href="{{ path('edit_user', { id:user.getId }) }}" class="btn btn-sm btn-success">
-                                Редактировать</a>
-                                </td>
+                                                            </tr>
                             </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
+                <a href="{{ path('index_users') }}" class="btn btn-sm btn-primary">
+                                Назад</a>
+                <a href="{{ path('edit_user', { id:user.getId }) }}" class="btn btn-sm btn-success">
+                                Редактировать</a>
             </div>
-        {% endif %}
     </div>
 {% endblock %}

@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('show_users');
+            return $this->redirectToRoute('index_users');
         }
 
         return $this->render('registration/register.html.twig', [

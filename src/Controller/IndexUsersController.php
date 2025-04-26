@@ -8,14 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-class ShowUsersController extends AbstractController
+class IndexUsersController extends AbstractController
 {
-    #[Route('/users', name: 'show_users')]
+    #[Route('/users', name: 'index_users')]
     public function show(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
 
-        return $this->render('users/show.html.twig', [
+        return $this->render('users/index.html.twig', [
             'users' => $users,
         ]);
     }
