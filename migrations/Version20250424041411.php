@@ -21,7 +21,12 @@ final class Version20250424041411 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE user_score (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, score SMALLINT NOT NULL, UNIQUE INDEX UNIQ_D05BCC09A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
+            CREATE TABLE user_score 
+            (id INT AUTO_INCREMENT NOT NULL,
+            user_id INT NOT NULL, 
+            score SMALLINT NOT NULL, 
+            UNIQUE INDEX UNIQ_D05BCC09A76ED395 (user_id), 
+            PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE user_score ADD CONSTRAINT FK_D05BCC09A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)

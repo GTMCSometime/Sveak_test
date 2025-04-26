@@ -29,7 +29,7 @@ class UsersFixtures extends Fixture
             $user->setEmail('test' . $i . '@' . $domain[rand(0, 3)] . '.' . $postfix[rand(0, 2)]);
             $user->setEducation($education[rand(0,2)]);
             $user->setAgreeTerms($agree[rand(0,1)]);
-            $score = new CalculateScore($user)->setScore();
+            $score = new CalculateScore($user)->calculate();
             $userScore->setScore($score);
             $user->setUserScore($userScore);
             $manager->persist($user);

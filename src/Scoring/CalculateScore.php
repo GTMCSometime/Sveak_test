@@ -19,7 +19,7 @@ class CalculateScore extends AbstractScore {
     }
     
 
-    public function setScore(): int {
+    public function calculate(): int {
 
     switch (substr($this->phoneNumber, 0, 3)) {
         case '923':
