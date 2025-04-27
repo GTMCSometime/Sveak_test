@@ -11,9 +11,9 @@ Route:
 - http://localhost:8000/user/{userID}/edit - изменение данных конкретного пользователя
 
 Тесты:
-1. php bin/console doctrine:fixtures:load - загрузить фикстуры в бд
-2. php bin/phpunit - запуск тестов
-3. bin/console app:score - консольная команда. Без опций показывает общий скоринг. С опцией - скоринг одного пользователя (пример: bin/console app:score --userID 5)
+1. php bin/console doctrine:fixtures:load - загрузить фикстуры в бд.
+2. php bin/phpunit - запуск тестов.
+3. bin/console app:score - консольная команда. Без опций показывает общий скоринг. С опцией - скоринг одного пользователя (пример: bin/console app:score --userID 5). При запуске обновляет скоринг, делая его актуальным.
 
 
 Доп. информация:
