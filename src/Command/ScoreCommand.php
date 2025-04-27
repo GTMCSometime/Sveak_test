@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 #[AsCommand(
     name: 'app:score',
-    description: "Calculate the scoring! Find out the total socre, or specific client by ID",
+    description: "Calculate the scoring! Find out the total score, or specific client by ID",
 )]
 class ScoreCommand extends Command
 {
