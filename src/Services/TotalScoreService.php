@@ -3,19 +3,25 @@
 namespace App\Services;
 
 use App\Repository\UserRepository;
-use App\Services\AbstractScore;
+use Doctrine\ORM\EntityManagerInterface;
 
-class TotalScoreService extends AbstractScore {
+class TotalScoreService  {
     private $users;
 
-    public function __construct(private UserRepository $userRepository) {
+    public function __construct(private UserRepository $userRepository,
+     private CalculateScoreService $calculateScoreService,
+     private EntityManagerInterface $em) {
         $this->users = $this->userRepository->findAll();
     }
 
     public function getTotalScore(): int {
+        $totalScore = 0;
+        $score = 0;
         foreach ($this->users as $user) {
-            $this->score += $user->getScore();
+            $totalScore += $this->calculateScoreService->calculate($user);
+            $user->setScore($score);
         }
-        return $this->score;
+        $this->em->flush();
+        return $totalScore;
     }
 }

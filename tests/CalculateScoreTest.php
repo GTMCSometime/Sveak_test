@@ -17,7 +17,7 @@ class CalculateScoreTest extends TestCase
         $user->setEmail('test@gmail.com'); // +10
         $user->setEducation('higher'); // +15        
         $user->setAgreeTerms(true); // +4
-        $score = new CalculateScoreService($user)->calculate();
+        $score = new CalculateScoreService()->calculate($user);
         $exp = 39;
         $this->assertEquals($exp, $score);
     }

@@ -4,6 +4,7 @@ namespace App\Command;
 
 
 use App\Repository\UserRepository;
+use App\Services\CalculateScoreService;
 use App\Services\TotalScoreService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -11,29 +12,33 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[AsCommand(
     name: 'app:score',
-    description: 'Calculate the scoring! Without arguments shows overall scoring',
+    description: "Calculate the scoring! Find out the total socre, or specific client by ID",
 )]
 class ScoreCommand extends Command
 {
-    public function __construct(private UserRepository $userRepository,
-    private TotalScoreService $totalScore)
-    {
+    public function __construct(
+    private UserRepository $userRepository,
+    private CalculateScoreService $calculateScoreService,
+    private TotalScoreService $totalScore,
+    private EntityManagerInterface $em,
+    ){
 
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->addOption('user_id', null, InputOption::VALUE_OPTIONAL, 'Find out the scoring of a user by Id');
+        $this->addOption('userID', null, InputOption::VALUE_OPTIONAL, 'userID, by recount score');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $userId = $input->getOption('user_id');
+        $userId = $input->getOption('userID');
 
         if ($userId) {
             $user = $this->userRepository->find($userId);
@@ -43,12 +48,15 @@ class ScoreCommand extends Command
                 return Command::FAILURE;
             }
 
-            $score = $user->getUserScore()->getScore();
+            $score = $this->calculateScoreService->calculate($user);
+            $user->setScore($score);
+            $this->em->flush();
 
-            $io->note(sprintf("Score to %s with id $userId: %s", $user->getName(), $score));
+            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score));
         } else {
 
-            $io->note(sprintf("Sum: %s", $this->totalScore->getTotalScore()));
+
+            $io->note(sprintf("Total score recount. Now its: %s", $this->totalScore->getTotalScore()));
         }
 
         return Command::SUCCESS;
