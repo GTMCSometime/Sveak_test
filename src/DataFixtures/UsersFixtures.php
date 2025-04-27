@@ -13,13 +13,17 @@ class UsersFixtures extends Fixture
     {
         $names = ["Александр", "Ирина", "Сергей", "Варвара", "Олег",
          "Наталья", "Михаил", "Святослав", "Инна", "Виктория", "Николай"];
+
         $surnames = ["Иванов", "Юрьевна", "Сергеев", "Александровна", "Меньшиков",
          "Вихарькова", "Анатольевич", "Тверской", "Сдобина", "Швец", "Давыдов"];
+
         $domain = ['yandex', 'gmail', 'mail', 'somemail'];
         $postfix = ['ru', 'com', 'example']; 
         $education = ['higher', 'special', 'secondary'];
         $agree = [true, false];
+
          for($i = 0; $i < 11; $i++) {
+            
             $user = new User();
             $user->setName($names[$i]);
             $user->setSurname($surnames[$i]);

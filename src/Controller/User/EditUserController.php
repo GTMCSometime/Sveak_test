@@ -21,6 +21,7 @@ class EditUserController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $user = $form->getData();
             $em->flush();
 
