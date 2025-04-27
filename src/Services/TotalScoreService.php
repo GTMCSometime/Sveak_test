@@ -16,10 +16,9 @@ class TotalScoreService  {
 
     public function getTotalScore(): int {
         $totalScore = 0;
-        $score = 0;
         foreach ($this->users as $user) {
             $totalScore += $this->calculateScoreService->calculate($user);
-            $user->setScore($score);
+            $user->setScore($this->calculateScoreService->calculate($user));
         }
         $this->em->flush();
         return $totalScore;
