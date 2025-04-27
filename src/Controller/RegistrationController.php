@@ -15,7 +15,8 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $em, PersistenceManagerRegistry $doctrine, CalculateScoreService $calculateScoreService): Response
+    public function register(Request $request, EntityManagerInterface $em, PersistenceManagerRegistry $doctrine,
+     CalculateScoreService $calculateScoreService): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
