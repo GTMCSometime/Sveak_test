@@ -48,11 +48,12 @@ class ScoreCommand extends Command
                 return Command::FAILURE;
             }
 
-            $score = $this->calculateScoreService->calculate($user);
-            $user->setScore($score);
+            $score = $this->calculateScoreService->calculate($user, true);
+            $user->setScore($score['score']);
             $this->em->flush();
 
-            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score));
+            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score['score']));
+            $this->details($io, $score);
         } else {
 
 
@@ -60,5 +61,20 @@ class ScoreCommand extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    private function details(SymfonyStyle $io, array $data): void {
+        $io->section("Scoring details:");
+        $rows = [
+            ['Operator', $data['phoneNumber']],
+            ['Email', $data['email']],
+            ['Education', $data['education']],
+            ['Agree', $data['agree']],
+            ['Total Score', $data['score']], 
+        ];
+        $io->table(
+            ['property', 'score'],
+            $rows,
+        );
     }
 }
