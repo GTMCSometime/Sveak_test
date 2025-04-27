@@ -1,27 +1,14 @@
 <?php
 
-namespace App\Scoring;
+namespace App\Services;
 use App\Entity\User;
 
-class CalculateScore extends AbstractScore {
+class CalculateScoreService extends AbstractScore {
     private $user;
-    private $phoneNumber;
-    private $domain;
-    private $education;
-    private $agreeTerms;
 
-    public function __construct(User $user) {
-        $this->user = $user;
-        $this->phoneNumber = $this->user->getPhoneNumber();
-        $this->domain = $this->user->getEmail();
-        $this->education = $this->user->getEducation();
-        $this->agreeTerms = $this->user->getAgreeTerms();
-    }
-    
+    public function calculate(User $user): int {
 
-    public function calculate(): int {
-
-    switch (substr($this->phoneNumber, 0, 3)) {
+    switch (substr($user->getPhoneNumber(), 0, 3)) {
         case '923':
             $this->score += 10;
             break;
@@ -40,7 +27,7 @@ class CalculateScore extends AbstractScore {
     }
 
 
-    preg_match('|@([0-9a-zA-Z]+)\.|i', $this->domain, $match);
+    preg_match('|@([0-9a-zA-Z]+)\.|i', $user->getEmail(), $match);
     
     switch ($match[1]) {
         case 'gmail':
@@ -60,7 +47,7 @@ class CalculateScore extends AbstractScore {
                     break;
     }
 
-    switch ($this->education) {
+    switch ($user->getEducation()) {
         case 'higher':
             $this->score += 15;
             break;
@@ -74,7 +61,7 @@ class CalculateScore extends AbstractScore {
                     break;
     }
 
-    $this->agreeTerms === true ? $this->score += 4 : $this->score += 0;
+    $user->getAgreeTerms() === true ? $this->score += 4 : $this->score += 0;
     return $this->score;
 }
 }

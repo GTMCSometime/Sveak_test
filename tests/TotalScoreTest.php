@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use App\Scoring\CalculateScore;
+use App\Services\CalculateScoreService;
 use PHPUnit\Framework\TestCase;
 
 class TotalScoreTest extends TestCase
@@ -17,7 +17,7 @@ class TotalScoreTest extends TestCase
         $firstUser->setEmail('test@gmail.com'); // +10
         $firstUser->setEducation('higher'); // +15        
         $firstUser->setAgreeTerms(true); // +4
-        $firstScore = new CalculateScore($firstUser)->calculate();
+        $firstScore = new CalculateScoreService($firstUser)->calculate();
 
         $secondUser = new User();
         $secondUser->setName('Second');
@@ -26,7 +26,7 @@ class TotalScoreTest extends TestCase
         $secondUser->setEmail('test@other.com'); // +3
         $secondUser->setEducation('secondary'); // +5        
         $secondUser->setAgreeTerms(false); // 0
-        $secondScore = new CalculateScore($secondUser)->calculate();
+        $secondScore = new CalculateScoreService($secondUser)->calculate();
 
         $sum = $firstScore + $secondScore; // 50
         $exp = 50;

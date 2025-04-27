@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use App\Scoring\CalculateScore;
+use App\Services\CalculateScoreService;
 use PHPUnit\Framework\TestCase;
 
 class CalculateScoreTest extends TestCase
@@ -17,7 +17,7 @@ class CalculateScoreTest extends TestCase
         $user->setEmail('test@gmail.com'); // +10
         $user->setEducation('higher'); // +15        
         $user->setAgreeTerms(true); // +4
-        $score = new CalculateScore($user)->calculate();
+        $score = new CalculateScoreService($user)->calculate();
         $exp = 39;
         $this->assertEquals($exp, $score);
     }

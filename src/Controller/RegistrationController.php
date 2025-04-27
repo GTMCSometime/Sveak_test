@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\UserScore;
 use App\Form\RegistrationFormType;
-use App\Scoring\CalculateScore;
+use App\Services\CalculateScoreService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,18 +15,16 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $em, PersistenceManagerRegistry $doctrine): Response
+    public function register(Request $request, EntityManagerInterface $em, PersistenceManagerRegistry $doctrine, CalculateScoreService $calculateScoreService): Response
     {
         $user = new User();
-        $userScore = new UserScore();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $score = new CalculateScore($user)->calculate();
-            $userScore->setScore($score);
-            $user->setUserScore($userScore);
+            $score = $calculateScoreService->calculate($user);
+            $user->setScore($score);
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();

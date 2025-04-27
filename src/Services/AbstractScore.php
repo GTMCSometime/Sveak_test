@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scoring;
+namespace App\Services;
 
 abstract class AbstractScore 
 {

@@ -1,7 +1,7 @@
 В терминале:
 1. composer install
 2. php bin/console importmap:install
-3. bin/console doctrine doctrine:migrations:migrate
+3. bin/console doctrine:migrations:migrate
 4. symfony serve
 
 Route:

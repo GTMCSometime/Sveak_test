@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Services;
-use App\Repository\UserRepository;
-use App\Scoring\AbstractScore;
 
-class TotalScoreService extends AbstractScore{
+use App\Repository\UserRepository;
+use App\Services\AbstractScore;
+
+class TotalScoreService extends AbstractScore {
     private $users;
 
     public function __construct(private UserRepository $userRepository) {
@@ -13,7 +14,7 @@ class TotalScoreService extends AbstractScore{
 
     public function getTotalScore(): int {
         foreach ($this->users as $user) {
-            $this->score += $user->getUserScore()->getScore();
+            $this->score += $user->getScore();
         }
         return $this->score;
     }

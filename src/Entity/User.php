@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -88,8 +89,8 @@ class User
     #[ORM\Column(type: 'boolean')]
     private bool $agree_terms = false;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?UserScore $userScore = null;
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $score = null;
     
 
     public function getId(): ?int
@@ -169,19 +170,14 @@ class User
         return $this;
     }
 
-    public function getUserScore(): ?UserScore
+    public function getScore(): ?int
     {
-        return $this->userScore;
+        return $this->score;
     }
 
-    public function setUserScore(UserScore $userScore): static
+    public function setScore(int $score): static
     {
-        // set the owning side of the relation if necessary
-        if ($userScore->getUser() !== $this) {
-            $userScore->setUser($this);
-        }
-
-        $this->userScore = $userScore;
+        $this->score = $score;
 
         return $this;
     }
