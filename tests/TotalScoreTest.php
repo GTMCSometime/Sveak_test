@@ -17,7 +17,7 @@ class TotalScoreTest extends TestCase
         $firstUser->setEmail('test@gmail.com'); // +10
         $firstUser->setEducation('higher'); // +15        
         $firstUser->setAgreeTerms(true); // +4
-        $firstScore = new CalculateScoreService()->calculate($firstUser);
+        $firstScore = new CalculateScoreService()->calculateTotalScore($firstUser);
 
         $secondUser = new User();
         $secondUser->setName('Second');
@@ -26,7 +26,7 @@ class TotalScoreTest extends TestCase
         $secondUser->setEmail('test@other.com'); // +3
         $secondUser->setEducation('secondary'); // +5        
         $secondUser->setAgreeTerms(false); // 0
-        $secondScore = new CalculateScoreService()->calculate($secondUser);
+        $secondScore = new CalculateScoreService()->calculateTotalScore($secondUser);
 
         $sum = $firstScore + $secondScore; // 50
         $exp = 50;

@@ -5,7 +5,6 @@ namespace App\Command;
 
 use App\Repository\UserRepository;
 use App\Services\CalculateScoreService;
-use App\Services\TotalScoreService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,7 +22,6 @@ class ScoreCommand extends Command
     public function __construct(
     private UserRepository $userRepository,
     private CalculateScoreService $calculateScoreService,
-    private TotalScoreService $totalScore,
     private EntityManagerInterface $em,
     ){
 
@@ -48,16 +46,22 @@ class ScoreCommand extends Command
                 return Command::FAILURE;
             }
 
-            $score = $this->calculateScoreService->calculate($user, true);
-            $user->setScore($score['score']);
+            $score = $this->calculateScoreService->calculateTotalScore($user);
+            $details = $this->calculateScoreService->scoreDetails($user);
+            $user->setScore($score);
             $this->em->flush();
 
-            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score['score']));
-            $this->details($io, $score);
+            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score));
+            $this->details($io, $details);
         } else {
 
+            $users = $this->userRepository->findAll();
+            $totalUsersScore = 0;
+            foreach ($users as $user) {
+                $totalUsersScore += $this->calculateScoreService->calculateTotalScore($user);
+            }
 
-            $io->note(sprintf("Total score recount. Now its: %s", $this->totalScore->getTotalScore()));
+            $io->note(sprintf("Total score recount. Now its: %s",  $totalUsersScore));
         }
 
         return Command::SUCCESS;

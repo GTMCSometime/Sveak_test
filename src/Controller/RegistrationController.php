@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $user = $form->getData();
-            $score = $calculateScoreService->calculate($user);
+            $score = $calculateScoreService->calculateTotalScore($user);
             $user->setScore($score);
             $em = $doctrine->getManager();
             $em->persist($user);
