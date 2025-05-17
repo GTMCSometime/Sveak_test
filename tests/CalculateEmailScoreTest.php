@@ -24,17 +24,17 @@ class CalculateEmailScoreTest extends TestCase
         $this->assertSame(
             $expectedScore,
             $actualScore,
-            "Expected score $expectedScore for education type '$emailValue'"
+            "Expected score $expectedScore for email domain '$emailValue'"
         );
     }
 
 
     public function emailDataProvider(): array {
         return [
-            'The user has @gmail mail domain' => ['test@gmail.com', 10],
-            'The user has @yandex mail domain' => ['test@yandex.com', 8],
-            'The user has @mail mail domain' => ['test@mail.ru', 6],
-            'The user has other mail domain' => ['test@other.com', 3],
+            'The user has @gmail email domain' => ['test@gmail.com', 10],
+            'The user has @yandex email domain' => ['test@yandex.com', 8],
+            'The user has @mail email domain' => ['test@mail.ru', 6],
+            'The user has other email domain' => ['test@other.com', 3],
         ];
     }
 }

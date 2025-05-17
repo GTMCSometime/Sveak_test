@@ -22,10 +22,9 @@ class CalculateAgreeScoreTest extends TestCase
         $actualScore = $service->calculate($userMock);
 
         $this->assertSame(
-            $expectedScore, 
+            $expectedScore,
             $actualScore,
-            "Expected $expectedScore score for agreeTerms = " .
-             ($agreeTermsValue ? 'true' : 'false')
+            "Expected score $expectedScore for agreeTerms '$agreeTermsValue'"
         );
     }
 
