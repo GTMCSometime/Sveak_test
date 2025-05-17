@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexUsersController extends AbstractController
 {
     #[Route('/users', name: 'index_users')]
+
+
     public function show(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
     {
         $query = $userRepository->createQueryBuilder('u')
@@ -23,7 +25,6 @@ class IndexUsersController extends AbstractController
             $request->query->getInt('page', 1), 
             10 
         );
-    
         return $this->render('users/index.html.twig', [
             'pagination' => $pagination,
         ]);

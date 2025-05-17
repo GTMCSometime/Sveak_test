@@ -5,10 +5,18 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Services\CalculateScoreService;
+use App\Services\CalculateTotalScoreService;
 
 class UsersFixtures extends Fixture
 {
+    private CalculateTotalScoreService $calculateTotalScoreService;
+
+    public function __construct(CalculateTotalScoreService $calculateTotalScoreService)
+    {
+        $this->calculateTotalScoreService = $calculateTotalScoreService;
+    }
+
+
     public function load(ObjectManager $manager): void
     {
         $names = ["Александр", "Ирина", "Сергей", "Варвара", "Олег",
@@ -22,7 +30,7 @@ class UsersFixtures extends Fixture
         $education = ['higher', 'special', 'secondary'];
         $agree = [true, false];
 
-         for($i = 0; $i < 11; $i++) {
+         for($i = 0; $i < count($names); $i++) {
             
             $user = new User();
             $user->setName($names[$i]);
@@ -31,7 +39,7 @@ class UsersFixtures extends Fixture
             $user->setEmail('test' . $i . '@' . $domain[rand(0, 3)] . '.' . $postfix[rand(0, 2)]);
             $user->setEducation($education[rand(0,2)]);
             $user->setAgreeTerms($agree[rand(0,1)]);
-            $score = new CalculateScoreService()->calculateTotalScore($user);
+            $score = $this->calculateTotalScoreService->calculate($user);
             $user->setScore($score);
             $manager->persist($user);
 

@@ -4,7 +4,8 @@ namespace App\Command;
 
 
 use App\Repository\UserRepository;
-use App\Services\CalculateScoreService;
+use App\Services\CalculateTotalScoreService;
+use App\Services\ScoreDetailsService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +22,8 @@ class ScoreCommand extends Command
 {
     public function __construct(
     private UserRepository $userRepository,
-    private CalculateScoreService $calculateScoreService,
+    private CalculateTotalScoreService $calculateScoreService,
+    private ScoreDetailsService $scoreDetailsService,
     private EntityManagerInterface $em,
     ){
 
@@ -30,7 +32,8 @@ class ScoreCommand extends Command
 
     protected function configure(): void
     {
-        $this->addOption('userID', null, InputOption::VALUE_OPTIONAL, 'userID, by recount score');
+        $this->addOption('userID', null, InputOption::VALUE_OPTIONAL, 'userID,
+         by recount score');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,28 +49,32 @@ class ScoreCommand extends Command
                 return Command::FAILURE;
             }
 
-            $score = $this->calculateScoreService->calculateTotalScore($user);
-            $details = $this->calculateScoreService->scoreDetails($user);
+            $score = $this->calculateScoreService->calculate($user);
+            $details = $this->scoreDetailsService->scoreDetails($user);
             $user->setScore($score);
             $this->em->flush();
 
-            $io->note(sprintf("Score to %s with id $userId: %s. Its recount now.", $user->getName(), $score));
-            $this->details($io, $details);
+            $io->note(sprintf("Score for %s with ID %d: %s...", $user->getName(),
+             $userId, $score));
+            $this->showDetails($io, $details);
         } else {
 
             $users = $this->userRepository->findAll();
             $totalUsersScore = 0;
+            $personalScore = 0;
             foreach ($users as $user) {
-                $totalUsersScore += $this->calculateScoreService->calculateTotalScore($user);
+                $personalScore = $this->calculateScoreService->calculate($user);
+                $user->setScore($personalScore);
+                $totalUsersScore += $this->calculateScoreService->calculate($user);    
             }
-
+            $this->em->flush();
             $io->note(sprintf("Total score recount. Now its: %s",  $totalUsersScore));
         }
 
         return Command::SUCCESS;
     }
 
-    private function details(SymfonyStyle $io, array $data): void {
+    private function showDetails(SymfonyStyle $io, array $data): void {
         $io->section("Scoring details:");
         $rows = [
             ['Operator', $data['phoneNumber']],

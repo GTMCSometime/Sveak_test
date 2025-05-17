@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class ShowUserController extends AbstractController
 {
     #[Route('/user/{id}/show', name: 'show_user')]
+
+    
     public function show(User $user, Request $request): Response
     {
         $form = $this->createForm(EditFormType::class, $user);
