@@ -13,6 +13,7 @@ class CalculateEducationService implements CalculateInterface  {
 
                 case 'special':
                     $score += 10;
+                    break;
 
                     case 'secondary':
                         $score += 5;

@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\User;
+use App\Services\CalculateEducationService;
 use PHPUnit\Framework\TestCase;
 
 class CalculateEducationScoreTest extends TestCase
@@ -10,21 +11,20 @@ class CalculateEducationScoreTest extends TestCase
         /**
      * @dataProvider educationDataProvider
      */
-    public function testCalculateAgreeTerms(string $education, int $expectedScore): void
+    public function testCalculateEducation(string $educationValue, int $expectedScore): void
     {
         $userMock = $this->createMock(User::class);
         
-        $userMock->method('education')->willReturn($education);
+        $userMock->method('getEducation')->willReturn($educationValue);
 
-        $service = new CalculateAgreeService();
+        $service = new CalculateEducationService();
 
         $actualScore = $service->calculate($userMock);
 
         $this->assertSame(
-            $expectedScore, 
+            $expectedScore,
             $actualScore,
-            "Expected $expectedScore score for agreeTerms = " .
-             ($agreeTermsValue ? 'true' : 'false')
+            "Expected score $expectedScore for education type '$educationValue'"
         );
     }
 
